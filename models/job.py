@@ -1,12 +1,16 @@
-from sqlalchemy import Column,Integer,String,ForeignKey,relationship
-from models.company import Company
-from database import Base,engine,sessionLocal
+from database import Base
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class Job(Base):
-    _tablename_="companies"
-    id=Column(Integer,primary_key=True,index=True)
-    title=Column(String,nullabel=False,description=Column(String))
-    salary=Column(Integer)
-    company_id=Column(Integer,ForeignKey("companied.id"))
-    company=relationship("company",back_populates="jobs")
+    __tablename__ = "jobs"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    description = Column(String)
+    salary = Column(Integer)
+
+    company_id = Column(Integer, ForeignKey("companies.id"))
+
+    company = relationship("Company", back_populates="jobs")
