@@ -14,6 +14,7 @@ def create_jobs(job:JobCreate):
 def get_all_job():
     return jobs
 
+
 @router.get("/{job_id}")
 def get_job(job_id:int):
     return jobs[job_id]
