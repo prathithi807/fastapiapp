@@ -1,2 +1,2 @@
-export const name="hamsini";
+export const name = "sriram";
 console.log(name);
