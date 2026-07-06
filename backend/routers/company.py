@@ -14,7 +14,6 @@ def create_company(company: CompanyCreate,db:Session=Depends(get_db),current_use
     db.refresh(db_company)
     return db_company
 
-
 @router.get("/",status_code=status.HTTP_200_OK,response_model=list[CompanyResponse])
 def get_all_company(db:Session=Depends(get_db),current_user=Depends(get_current_user)):
     companies = db.query(Company).all()
