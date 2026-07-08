@@ -20,10 +20,3 @@ class UserResponse(BaseModel):
 class Login_User(BaseModel):
     email: str
     password: str
-
-
-
-
-
-
-    

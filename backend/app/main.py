@@ -1,19 +1,11 @@
 from fastapi import FastAPI
+from routers import company,job,auth,chat,rag
+from database import Base
+from models import job as job_model,company as company_model,users as user_model
 from fastapi.middleware.cors import CORSMiddleware
-from routers import rag
-from database import Base, engine
 
-from models import company as company_model
-from models import job as job_model
-from models import users as user_model
 
-from routers import auth
-from routers import company
-from routers import job
-from routers import chat
-
-app = FastAPI(title="TalentSpark API")
-
+app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -22,26 +14,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create tables
-Base.metadata.create_all(bind=engine)
+@app.on_event("startup")
+async def startup_event():
+    from database import engine
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
-# Register routers
 app.include_router(auth.router)
 app.include_router(company.router)
 app.include_router(job.router)
 app.include_router(chat.router)
 app.include_router(rag.router)
-
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to TalentSpark API"}
-
+    return {"Hello": "World"}
 
 @app.get("/about")
-def about():
-    return {"about": "TalentSpark Backend API"}
-
+def read_about():
+    return {"about": "This is about page"}
 
 @app.get("/contact")
-def contact():
-    return {"contact": "Contact Page"}
+def read_contact():
+    return {"contact": "This is contact page"}
+#  Albattrosdip
+# steps---> 
+#  1.postgres drivers
+# 2.servers
+# 3. registration -> enterprise db->first two options
+# student_db>database>schemas>tables>right click>query tool
