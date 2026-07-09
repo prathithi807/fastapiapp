@@ -50,4 +50,3 @@ async def login(form_data:OAuth2PasswordRequestForm=Depends(),db:AsyncSession = 
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Authentication server error: {str(e)}")
-
